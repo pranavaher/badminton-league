@@ -1,27 +1,48 @@
 <h1>Match</h1>
 
-<p>
-  <strong>Winner:</strong>
-  <% if @match.winner.present? %>
-    <%= link_to @match.winner.name, player_path(@match.winner) %>
-  <% else %>
-    <em>Not decided</em>
-  <% end %>
-</p>
+<dl class="row">
+  <dt class="col-sm-3">Name</dt>
+  <dd class="col-sm-9"><%= @match.name.presence || "Match ##{@match.id}" %></dd>
 
-<p>
-  <strong>Loser:</strong>
-  <% if @match.loser.present? %>
-    <%= link_to @match.loser.name, player_path(@match.loser) %>
-  <% else %>
-    <em>Not decided</em>
-  <% end %>
-</p>
+  <dt class="col-sm-3">Player A</dt>
+  <dd class="col-sm-9"><%= link_to @match.player_a.name, player_path(@match.player_a) %></dd>
 
-<p>
-  <strong>Recorded at:</strong>
-  <%= l @match.created_at %>
-</p>
+  <dt class="col-sm-3">Player B</dt>
+  <dd class="col-sm-9"><%= link_to @match.player_b.name, player_path(@match.player_b) %></dd>
+
+  <dt class="col-sm-3">Venue</dt>
+  <dd class="col-sm-9"><%= @match.venue.name if @match.venue.present? %></dd>
+
+  <dt class="col-sm-3">Scheduled At</dt>
+  <dd class="col-sm-9">
+    <% if @match.scheduled_at.present? %>
+      <%= l @match.scheduled_at %>
+    <% else %>
+      <em>Not scheduled</em>
+    <% end %>
+  </dd>
+
+  <dt class="col-sm-3">Winner</dt>
+  <dd class="col-sm-9">
+    <% if @match.winner.present? %>
+      <%= link_to @match.winner.name, player_path(@match.winner) %>
+    <% else %>
+      <em>Not decided</em>
+    <% end %>
+  </dd>
+
+  <dt class="col-sm-3">Loser</dt>
+  <dd class="col-sm-9">
+    <% if @match.loser.present? %>
+      <%= link_to @match.loser.name, player_path(@match.loser) %>
+    <% else %>
+      <em>Not decided</em>
+    <% end %>
+  </dd>
+
+  <dt class="col-sm-3">Recorded at</dt>
+  <dd class="col-sm-9"><%= l @match.created_at %></dd>
+</dl>
 
 <% if @match.winner.blank? %>
   <%= link_to 'Edit', edit_match_path(@match), class: 'btn btn-secondary' %>

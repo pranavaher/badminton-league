@@ -18,6 +18,8 @@
   <dd class="col-sm-9"><%= @player.first_name %></dd>
   <dt class="col-sm-3">Last name</dt>
   <dd class="col-sm-9"><%= @player.last_name %></dd>
+  <dt class="col-sm-3">Country</dt>
+  <dd class="col-sm-9"><%= @player&.country&.name %></dd>
 </dl>
 
 <%= link_to "Back to players", players_path, class: "btn btn-link px-0" %>

@@ -25,6 +25,16 @@
     <%= f.collection_select :player_b_id, @players, :id, :name, prompt: 'Select player B', class: 'form-select' %>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :venue_id, 'Venue (Country)' %>
+    <%= f.collection_select :venue_id, @countries, :id, :name, prompt: 'Select venue', class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :scheduled_at, 'Scheduled Date/Time' %>
+    <%= f.datetime_local_field :scheduled_at, class: 'form-control' %>
+  </div>
+
   <div>
     <%= f.submit class: 'btn btn-primary' %>
     <%= link_to 'Back', matches_path, class: 'btn btn-secondary ms-2' %>

@@ -10,6 +10,8 @@
         <tr>
           <th>Name</th>
           <th>Date</th>
+          <th>Scheduled At</th>
+          <th>Venue</th>
           <th>Player A</th>
           <th>Player B</th>
           <th>Result</th>
@@ -23,16 +25,29 @@
               <%= link_to (m.name.presence || "Match ##{m.id}"), match_path(m) %>
             </td>
             <td><%= l m.created_at, format: :short %></td>
+            <td>
+              <% if m.scheduled_at.present? %>
+                <%= l m.scheduled_at, format: :short %>
+                <% if !m.scheduled_in_past? %>
+                  <span class="badge bg-warning">Upcoming</span>
+                <% end %>
+              <% else %>
+                <em class="text-muted">Not scheduled</em>
+              <% end %>
+            </td>
+            <td><%= m.venue.name if m.venue.present? %></td>
             <td><%= link_to m.player_a.name, player_path(m.player_a) %></td>
             <td><%= link_to m.player_b.name, player_path(m.player_b) %></td>
             <td>
               <% if m.winner.present? %>
                 <span class="badge bg-success"><%= m.winner.name %></span>
-              <% else %>
+              <% elsif m.scheduled_in_past? %>
                 <div class="btn-group" role="group">
                   <%= button_to 'Mark A as winner', decide_match_path(m, winner: 'a'), method: :post, class: 'btn btn-sm btn-outline-primary' %>
                   <%= button_to 'Mark B as winner', decide_match_path(m, winner: 'b'), method: :post, class: 'btn btn-sm btn-outline-primary' %>
                 </div>
+              <% else %>
+                <span class="text-muted small">Yet to start</span>
               <% end %>
             </td>
             <td class="text-end">

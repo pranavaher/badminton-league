@@ -11,6 +11,7 @@ class PlayersController < ApplicationController
 
   def new
     @player = Player.new
+    @countries = Country.order(:name)
   end
 
   def create
@@ -19,16 +20,20 @@ class PlayersController < ApplicationController
     if @player.save
       redirect_to @player, notice: "Player was created."
     else
+      @countries = Country.order(:name)
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit; end
+  def edit
+    @countries = Country.order(:name)
+  end
 
   def update
     if @player.update(player_params)
       redirect_to @player, notice: "Player was updated."
     else
+      @countries = Country.order(:name)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,7 +50,7 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(:first_name, :last_name)
+    params.require(:player).permit(:first_name, :last_name, :country_id)
   end
 end
 

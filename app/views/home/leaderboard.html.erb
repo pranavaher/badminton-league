@@ -10,6 +10,7 @@
         <tr>
           <th style="width: 50px;">Rank</th>
           <th>Player</th>
+          <th>Country</th>
           <th class="text-center">Wins</th>
           <th class="text-center">Losses</th>
           <th class="text-center">Win Rate</th>
@@ -23,6 +24,9 @@
             </td>
             <td>
               <%= link_to player.name, player_path(player), class: 'text-decoration-none' %>
+            </td>
+            <td>
+              <%= player.country.name %>
             </td>
             <td class="text-center">
               <span class="badge bg-success"><%= player.wins_count %></span>

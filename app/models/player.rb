@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Player < ApplicationRecord
+  belongs_to :country, optional: false
+
   validates :first_name, :last_name, presence: true
 
   def name

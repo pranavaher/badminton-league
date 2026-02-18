@@ -10,26 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_131000) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_140001) do
+  create_table "countries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_countries_on_name", unique: true
+  end
+
   create_table "matches", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "loser_id"
     t.string "name"
     t.integer "player_a_id"
     t.integer "player_b_id"
+    t.datetime "scheduled_at"
     t.datetime "updated_at", null: false
+    t.integer "venue_id"
     t.integer "winner_id"
     t.index ["loser_id"], name: "index_matches_on_loser_id"
     t.index ["player_a_id"], name: "index_matches_on_player_a_id"
     t.index ["player_b_id"], name: "index_matches_on_player_b_id"
+    t.index ["venue_id"], name: "index_matches_on_venue_id"
     t.index ["winner_id"], name: "index_matches_on_winner_id"
   end
 
   create_table "players", force: :cascade do |t|
+    t.integer "country_id"
     t.datetime "created_at", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.datetime "updated_at", null: false
+    t.index ["country_id"], name: "index_players_on_country_id"
     t.index ["last_name", "first_name"], name: "index_players_on_last_name_and_first_name"
   end
 
@@ -50,8 +62,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_131000) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "matches", "countries", column: "venue_id"
   add_foreign_key "matches", "players", column: "loser_id"
   add_foreign_key "matches", "players", column: "player_a_id"
   add_foreign_key "matches", "players", column: "player_b_id"
   add_foreign_key "matches", "players", column: "winner_id"
+  add_foreign_key "players", "countries"
 end

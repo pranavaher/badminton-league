@@ -21,6 +21,13 @@
     </div>
   </div>
 
+  <div class="row g-3 mt-1">
+    <div class="col-md-6">
+      <%= f.label :country_id, 'Country', class: "form-label" %>
+      <%= f.collection_select :country_id, @countries, :id, :name, { prompt: 'Select a country' }, class: "form-select" %>
+    </div>
+  </div>
+
   <div class="mt-4 d-flex gap-2">
     <%= f.submit class: "btn btn-primary" %>
     <%= link_to "Cancel", players_path, class: "btn btn-link" %>
