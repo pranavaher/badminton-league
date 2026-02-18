@@ -26,7 +26,7 @@
               <%= link_to player.name, player_path(player), class: 'text-decoration-none' %>
             </td>
             <td>
-              <%= player.country.name %>
+              <%= player&.country&.name %>
             </td>
             <td class="text-center">
               <span class="badge bg-success"><%= player.wins_count %></span>
@@ -49,5 +49,9 @@
     No players yet. Create players to see rankings.
   </div>
 <% end %>
+
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @players %>
+</div>
 
 <%= link_to 'Back to Home', root_path, class: 'btn btn-secondary mt-3' %>

@@ -4,7 +4,7 @@ class MatchesController < ApplicationController
   before_action :prevent_decide_if_not_scheduled, only: %i[decide]
 
   def index
-    @matches = Match.includes(:winner, :loser).order(created_at: :desc)
+    @matches = Match.includes(:winner, :loser).order(created_at: :desc).page(params[:page]).per(5)
   end
 
   def show; end

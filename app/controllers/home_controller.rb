@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   end
 
   def leaderboard
-    @players = Player.rank_by_wins.select('players.*, COUNT(matches.id) as wins_total')
+    @players = Player.rank_by_wins.select('players.*, COUNT(matches.id) as wins_total').page(params[:page]).per(10)
   end
 
   def statistics

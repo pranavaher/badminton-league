@@ -51,7 +51,7 @@
               <% end %>
             </td>
             <td class="text-end">
-              <% if m.winner.blank? %>
+              <% if m.scheduled_at.future? %>
                 <%= link_to 'Edit', edit_match_path(m), class: 'btn btn-sm btn-outline-secondary' %>
               <% end %>
               <%= button_to 'Delete', match_path(m), method: :delete, form: { data: { turbo_confirm: 'Delete this match?' }, class: 'd-inline' }, class: 'btn btn-sm btn-outline-danger ms-2' %>
@@ -64,3 +64,6 @@
 <% else %>
   <div class="alert alert-light border">No matches recorded yet.</div>
 <% end %>
+<div class="d-flex justify-content-center mt-4">
+  <%= paginate @matches %>
+</div>
