@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="mb-0">Statistics</h1>
+  <%= link_to 'Back', root_path, class: 'btn btn-secondary' %>
+</div>
+
+<h4>Matches per Venue</h4>
+<% if @matches_per_venue.any? %>
+  <div class="table-responsive mb-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Venue (Country)</th>
+          <th class="text-center">Matches</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @matches_per_venue.each do |row| %>
+          <tr>
+            <td><%= row.name %></td>
+            <td class="text-center"><%= row.matches_count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-light border">No venue data.</div>
+<% end %>
+
+<h4>Wins/Losses by Player Country</h4>
+<% if @country_stats.any? %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th class="text-center">Wins</th>
+          <th class="text-center">Losses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @country_stats.each do |s| %>
+          <tr>
+            <td><%= s[:country].name %></td>
+            <td class="text-center"><%= s[:wins] %></td>
+            <td class="text-center"><%= s[:losses] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-light border">No country stats.</div>
+<% end %>

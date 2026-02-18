@@ -10,6 +10,7 @@
                   method: :delete,
                   data: { turbo_confirm: "Delete #{@player.name}?" },
                   class: "btn btn-outline-danger" %>
+    <%= link_to 'Performance', stats_player_path(@player), class: 'btn btn-primary ms-2' %>
   </div>
 </div>
 

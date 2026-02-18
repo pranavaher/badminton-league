@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="mb-0">Performance — <%= @player.name %></h1>
+  <%= link_to 'Back', player_path(@player), class: 'btn btn-secondary' %>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h5>Matches played</h5>
+      <p class="display-6"><%= @total_matches %></p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h5>Wins</h5>
+      <p class="display-6 text-success"><%= @wins %></p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h5>Losses</h5>
+      <p class="display-6 text-danger"><%= @losses %></p>
+    </div>
+  </div>
+</div>
+
+<div class="mb-4">
+  <h5>Win rate: <strong><%= @win_rate %>%</strong></h5>
+</div>
+
+<h4>Matches</h4>
+<% if @matches.any? %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Match</th>
+          <th>Venue</th>
+          <th>Opponent</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @matches.each do |m| %>
+          <tr>
+            <td><%= l m.created_at, format: :short %></td>
+            <td><%= m.name.presence || "Match ##{m.id}" %></td>
+            <td><%= m.venue&.name %></td>
+            <td>
+              <% opponent = (m.player_a_id == @player.id) ? m.player_b : m.player_a %>
+              <%= link_to opponent.name, player_path(opponent) %>
+            </td>
+            <td>
+              <% if m.winner.blank? %>
+                <span class="text-muted">Pending</span>
+              <% elsif m.winner_id == @player.id %>
+                <span class="badge bg-success">Win</span>
+              <% else %>
+                <span class="badge bg-danger">Loss</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-light border">No matches for this player yet.</div>
+<% end %>
