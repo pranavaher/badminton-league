@@ -33,3 +33,20 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+# Local bundle path (gems installed with bundle config path vendor/bundle)
+/vendor/bundle/
+
+# SQLite DB files in db/ or root (if any)
+*.sqlite3
+*.sqlite3-*
+
+# Bootsnap cache
+/tmp/cache/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
