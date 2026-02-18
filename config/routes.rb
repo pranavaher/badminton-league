@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :players
+
   root "home#index"
 
   get "admin", to: "home#index", as: :admin_root

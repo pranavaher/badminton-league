@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="mb-0">Players</h1>
+  <%= link_to "New player", new_player_path, class: "btn btn-primary" %>
+</div>
+
+<% if @players.any? %>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @players.each do |player| %>
+          <tr>
+            <td><%= link_to player.name, player_path(player), class: "text-decoration-none" %></td>
+            <td class="text-end">
+              <div class="btn-group" role="group" aria-label="Player actions">
+                <%= link_to "View", player_path(player), class: "btn btn-sm btn-outline-primary" %>
+                <%= link_to "Edit", edit_player_path(player), class: "btn btn-sm btn-outline-secondary" %>
+                <%= button_to "Delete",
+                              player_path(player),
+                              method: :delete,
+                              form: { class: "d-inline" },
+                              data: { turbo_confirm: "Delete #{player.name}?" },
+                              class: "btn btn-sm btn-outline-danger" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-light border">
+    No players yet. Create your first player.
+  </div>
+<% end %>
+

@@ -1,0 +1,29 @@
+<%= form_with model: player do |f| %>
+  <% if player.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h6 class="mb-2"><%= pluralize(player.errors.count, "error") %> prevented saving:</h6>
+      <ul class="mb-0">
+        <% player.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row g-3">
+    <div class="col-md-6">
+      <%= f.label :first_name, class: "form-label" %>
+      <%= f.text_field :first_name, class: "form-control", autocomplete: "given-name" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.label :last_name, class: "form-label" %>
+      <%= f.text_field :last_name, class: "form-control", autocomplete: "family-name" %>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex gap-2">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", players_path, class: "btn btn-link" %>
+  </div>
+<% end %>
+

@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_02_18_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_124427) do
+  create_table "players", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_name", "first_name"], name: "index_players_on_last_name_and_first_name"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "current_sign_in_at"

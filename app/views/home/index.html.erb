@@ -2,6 +2,10 @@
   <div class="col">
     <h1 class="mb-4">Admin Dashboard</h1>
     <p class="lead">Welcome, <%= current_user.email %>.</p>
-    <p>Use the navigation to manage players and matches (coming next).</p>
+    <p class="mb-4">Use the navigation to manage players and matches (coming next).</p>
+
+    <div class="d-flex gap-2">
+      <%= link_to "Manage players", players_path, class: "btn btn-primary" %>
+    </div>
   </div>
 </div>
