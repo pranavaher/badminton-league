@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_140001) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_140002) do
   create_table "countries", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_140001) do
     t.string "name"
     t.integer "player_a_id"
     t.integer "player_b_id"
-    t.datetime "scheduled_at"
+    t.datetime "scheduled_at", null: false
     t.datetime "updated_at", null: false
     t.integer "venue_id"
     t.integer "winner_id"
