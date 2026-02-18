@@ -11,10 +11,13 @@ class PlayersController < ApplicationController
 
   def stats
     @player = Player.find(params[:id])
-    @total_matches = Match.where('player_a_id = :id OR player_b_id = :id', id: @player.id).count
     @wins = @player.wins.count
     @losses = @player.losses.count
+    # Total matches is only those that have been decided (have a winner)
+    @total_matches = @wins + @losses
     @win_rate = @total_matches > 0 ? ((@wins.to_f / @total_matches) * 100).round(1) : 0.0
+    # Pending matches are those with no winner yet
+    @pending_matches = Match.where('(player_a_id = :id OR player_b_id = :id) AND winner_id IS NULL', id: @player.id).count
     @matches = Match.includes(:player_a, :player_b, :winner, :loser, :venue).where('player_a_id = :id OR player_b_id = :id', id: @player.id).order(created_at: :desc)
   end
 

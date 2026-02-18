@@ -4,22 +4,28 @@
 </div>
 
 <div class="row mb-3">
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card p-3">
       <h5>Matches played</h5>
       <p class="display-6"><%= @total_matches %></p>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card p-3">
       <h5>Wins</h5>
       <p class="display-6 text-success"><%= @wins %></p>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="card p-3">
       <h5>Losses</h5>
       <p class="display-6 text-danger"><%= @losses %></p>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card p-3">
+      <h5>Yet to play</h5>
+      <p class="display-6 text-warning"><%= @pending_matches %></p>
     </div>
   </div>
 </div>
