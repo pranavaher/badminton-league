@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_140002) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_140003) do
   create_table "countries", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
@@ -19,7 +19,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_140002) do
   end
 
   create_table "matches", force: :cascade do |t|
+    t.boolean "auto_decide", default: false, null: false
     t.datetime "created_at", null: false
+    t.string "job_id"
     t.integer "loser_id"
     t.string "name"
     t.integer "player_a_id"
