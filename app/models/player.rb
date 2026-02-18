@@ -24,5 +24,9 @@ class Player < ApplicationRecord
   def losses_count
     losses.count
   end
+
+  def self.rank_by_wins
+    left_joins(:wins).group('players.id').order('COUNT(matches.id) DESC, players.last_name ASC')
+  end
 end
 

@@ -19,7 +19,9 @@
       <tbody>
         <% @matches.each do |m| %>
           <tr>
-            <td><%= m.name.presence || "Match ##{m.id}" %></td>
+            <td>
+              <%= link_to (m.name.presence || "Match ##{m.id}"), match_path(m) %>
+            </td>
             <td><%= l m.created_at, format: :short %></td>
             <td><%= link_to m.player_a.name, player_path(m.player_a) %></td>
             <td><%= link_to m.player_b.name, player_path(m.player_b) %></td>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post :decide, on: :member
   end
 
+  get "leaderboard", to: "home#leaderboard", as: :leaderboard
   root "home#index"
 
   get "admin", to: "home#index", as: :admin_root

@@ -1,0 +1,49 @@
+<div class="mb-3">
+  <h1>Leaderboard</h1>
+  <p class="text-muted">Rankings based on total wins</p>
+</div>
+
+<% if @players.any? %>
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th style="width: 50px;">Rank</th>
+          <th>Player</th>
+          <th class="text-center">Wins</th>
+          <th class="text-center">Losses</th>
+          <th class="text-center">Win Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @players.each_with_index do |player, index| %>
+          <tr>
+            <td>
+              <span class="badge bg-primary"><%= index + 1 %></span>
+            </td>
+            <td>
+              <%= link_to player.name, player_path(player), class: 'text-decoration-none' %>
+            </td>
+            <td class="text-center">
+              <span class="badge bg-success"><%= player.wins_count %></span>
+            </td>
+            <td class="text-center">
+              <span class="badge bg-danger"><%= player.losses_count %></span>
+            </td>
+            <td class="text-center">
+              <% total_matches = player.wins_count + player.losses_count %>
+              <% win_rate = total_matches > 0 ? ((player.wins_count.to_f / total_matches) * 100).round(1) : 0 %>
+              <%= win_rate %>%
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-light border">
+    No players yet. Create players to see rankings.
+  </div>
+<% end %>
+
+<%= link_to 'Back to Home', root_path, class: 'btn btn-secondary mt-3' %>
