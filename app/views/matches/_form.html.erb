@@ -1,0 +1,32 @@
+<%= form_with(model: match, local: true, data: { turbo: false }) do |f| %>
+  <% if match.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(match.errors.count, 'error') %> prevented saving:</h4>
+      <ul>
+        <% match.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :name, 'Match Name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :player_a_id, 'Player A' %>
+    <%= f.collection_select :player_a_id, @players, :id, :name, prompt: 'Select player A', class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :player_b_id, 'Player B' %>
+    <%= f.collection_select :player_b_id, @players, :id, :name, prompt: 'Select player B', class: 'form-select' %>
+  </div>
+
+  <div>
+    <%= f.submit class: 'btn btn-primary' %>
+    <%= link_to 'Back', matches_path, class: 'btn btn-secondary ms-2' %>
+  </div>
+<% end %>

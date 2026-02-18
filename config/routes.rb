@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :players
+  resources :matches do
+    post :decide, on: :member
+  end
 
   root "home#index"
 

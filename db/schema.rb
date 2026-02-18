@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_18_124427) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_131000) do
+  create_table "matches", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "loser_id"
+    t.string "name"
+    t.integer "player_a_id"
+    t.integer "player_b_id"
+    t.datetime "updated_at", null: false
+    t.integer "winner_id"
+    t.index ["loser_id"], name: "index_matches_on_loser_id"
+    t.index ["player_a_id"], name: "index_matches_on_player_a_id"
+    t.index ["player_b_id"], name: "index_matches_on_player_b_id"
+    t.index ["winner_id"], name: "index_matches_on_winner_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "first_name", null: false
@@ -35,4 +49,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_18_124427) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "matches", "players", column: "loser_id"
+  add_foreign_key "matches", "players", column: "player_a_id"
+  add_foreign_key "matches", "players", column: "player_b_id"
+  add_foreign_key "matches", "players", column: "winner_id"
 end
