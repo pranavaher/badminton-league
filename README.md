@@ -2,6 +2,10 @@
 
 A Rails-based web application for managing badminton league tournaments. Users can create and manage players, record match results, track player rankings, and view comprehensive statistics.
 
+## Demo
+
+[▶️ Watch Demo](https://drive.google.com/file/d/1XLijd2hc4mNTVXAX29-wGkbX8I1sFBr9/view?usp=drive_link)
+
 ## Features
 
 - **Player Management**: Add, edit, delete, and view players with country association
@@ -25,16 +29,19 @@ A Rails-based web application for managing badminton league tournaments. Users c
 ## Database Models & Associations
 
 ### User
+
 - Devise authentication model
 - Relations: None specific to badminton logic
 
 ### Country
+
 - `name` (String, unique): Country name
 - Associations:
   - `has_many :players` (dependent: :nullify)
   - `has_many :matches, foreign_key: 'venue_id'` (dependent: :nullify)
 
 ### Player
+
 - `first_name` (String): First name (required)
 - `last_name` (String): Last name (required)
 - `country_id` (FK): Reference to Country (required)
@@ -49,6 +56,7 @@ A Rails-based web application for managing badminton league tournaments. Users c
   - `rank_by_wins`: Scope ordering players by wins DESC, last_name ASC
 
 ### Match
+
 - `name` (String): Match name/identifier (optional)
 - `player_a_id` (FK): Reference to Player A (required)
 - `player_b_id` (FK): Reference to Player B (required)
@@ -71,10 +79,12 @@ A Rails-based web application for managing badminton league tournaments. Users c
 ## Validations & Restrictions
 
 ### Player
+
 - `first_name` and `last_name` presence required
 - `country_id` presence required
 
 ### Match
+
 - `player_a` and `player_b` presence required
 - `venue` presence required
 - `player_a` and `player_b` must be different (custom validation)
@@ -84,12 +94,14 @@ A Rails-based web application for managing badminton league tournaments. Users c
 - `decide_winner!` uses `update_columns` to bypass regular validations
 
 ### Timezone
+
 - Application timezone set to `Asia/Kolkata` (IST)
 - All time comparisons use application timezone
 
 ## Routes
 
 ### Devise Routes
+
 ```
 POST   /users/sign_in              devise/sessions#create
 GET    /users/sign_out             devise/sessions#destroy
@@ -99,6 +111,7 @@ PATCH  /users                      devise/registrations#update
 ```
 
 ### Players Routes
+
 ```
 GET    /players                    players#index (paginated, 10 per page)
 GET    /players/:id                players#show
@@ -111,6 +124,7 @@ DELETE /players/:id                players#destroy
 ```
 
 ### Matches Routes
+
 ```
 GET    /matches                    matches#index (paginated, 10 per page)
 GET    /matches/:id                matches#show
@@ -123,6 +137,7 @@ POST   /matches/:id/decide         matches#decide (decide winner)
 ```
 
 ### Home Routes
+
 ```
 GET    /                           home#index (admin dashboard)
 GET    /leaderboard                home#leaderboard (paginated, 10 per page)
@@ -134,6 +149,7 @@ GET    /health                     rails/health#show
 ## Statistics & Views
 
 ### Player Performance (`/players/:id/stats`)
+
 - Total matches played
 - Win count
 - Loss count
@@ -141,17 +157,20 @@ GET    /health                     rails/health#show
 - Detailed match history with opponent, result, and venue
 
 ### Leaderboard (`/leaderboard`)
+
 - Players ranked by total wins (descending)
 - Shows: Rank, Player name, Country, Wins, Losses, Win rate %
 - Paginated (10 per page)
 
 ### Site Statistics (`/statistics`)
+
 - **Matches per Venue**: Shows count of matches played at each country/venue
 - **Wins/Losses by Player Country**: Aggregates wins and losses for players from each country
 
 ## Setup & Installation
 
 ### Prerequisites
+
 - Ruby 3.3.x
 - Bundler
 - SQLite3
@@ -159,25 +178,30 @@ GET    /health                     rails/health#show
 ### Installation Steps
 
 1. **Clone the repository**
+
    ```bash
    git clone <repo-url>
    cd badminton_league
    ```
 
 2. **Install dependencies**
+
    ```bash
    bundle install
    ```
 
 3. **Setup database**
+
    ```bash
    bundle exec rails db:create
    bundle exec rails db:migrate
    bundle exec rails db:seed
    ```
-   *(Seeds 20 countries: India, USA, UK, Canada, Australia, Japan, China, Germany, France, Brazil, Mexico, South Africa, Indonesia, Malaysia, Thailand, Singapore, Pakistan, Bangladesh, Sri Lanka, Nepal)*
+
+   _(Seeds 20 countries: India, USA, UK, Canada, Australia, Japan, China, Germany, France, Brazil, Mexico, South Africa, Indonesia, Malaysia, Thailand, Singapore, Pakistan, Bangladesh, Sri Lanka, Nepal)_
 
 4. **Create admin user** (via Rails console)
+
    ```bash
    bundle exec rails console
    User.create!(email: 'admin@example.com', password: 'password123', password_confirmation: 'password123')
@@ -188,17 +212,19 @@ GET    /health                     rails/health#show
    ```bash
    bundle exec rails server
    ```
-   *(Available at http://localhost:3000)*
+   _(Available at http://localhost:3000)_
 
 ## Usage
 
 ### Creating a Player
+
 1. Sign in as admin
 2. Navigate to **Manage Players** → **New Player**
 3. Enter first name, last name, and select country
 4. Click **Create Player**
 
 ### Creating a Match
+
 1. Navigate to **Manage Matches** → **New Match**
 2. Enter match name (optional)
 3. Select Player A and Player B (must be different)
@@ -207,12 +233,14 @@ GET    /health                     rails/health#show
 6. Click **Create Match**
 
 ### Recording a Match Result
+
 1. Navigate to **Manage Matches**
 2. Once scheduled time has passed, "Mark A as winner" and "Mark B as winner" buttons appear
 3. Click appropriate button to record winner
 4. Edit button is hidden after result is recorded
 
 ### Viewing Statistics
+
 1. **Player Performance**: Click "Performance" button on player show page (`/players/:id/stats`)
 2. **Leaderboard**: Navigate to **Leaderboard** page for rankings
 3. **Site Statistics**: Navigate to **Statistics** page for venue and country-level data
