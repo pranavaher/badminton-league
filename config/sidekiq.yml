@@ -1,0 +1,19 @@
+# Sidekiq configuration for background job processing
+---
+development:
+  :concurrency: 5
+  :timeout: 30
+  :verbose: false
+  :max_retries: 5
+  :queues:
+    - default
+    - high
+
+production:
+  :concurrency: 20
+  :timeout: 30
+  :verbose: false
+  :max_retries: 5
+  :queues:
+    - default
+    - high

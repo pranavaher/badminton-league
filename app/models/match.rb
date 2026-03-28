@@ -9,6 +9,9 @@ class Match < ApplicationRecord
   validates :player_a, :player_b, presence: true
   validate :players_must_be_different
   validate :scheduled_at_must_be_future
+  validate :auto_decide_requires_future_scheduled_at
+
+  after_create :schedule_auto_decide_job
 
   # Check if the match has been scheduled for a past date/time
   def scheduled_in_past?
@@ -18,6 +21,23 @@ class Match < ApplicationRecord
   # Check if the match can have a winner decided
   def can_decide_winner?
     scheduled_in_past?
+  end
+
+  # Schedule auto-decide job if enabled
+  def schedule_auto_decide_job
+    return unless auto_decide && scheduled_at.present?
+
+    # Schedule job to run at scheduled_at time
+    job_id = AutoDecideWinnerJob.set(wait_until: scheduled_at).perform_async(id)
+    update_column(:job_id, job_id)
+  end
+
+  # Cancel scheduled job if exists
+  def cancel_auto_decide_job
+    return unless job_id.present?
+
+    Sidekiq::ScheduledSet.new.find_job(job_id)&.delete
+    update_column(:job_id, nil)
   end
 
   # Assign a winner among the two players. Pass a Player id or :a/:b symbol.
@@ -48,9 +68,23 @@ class Match < ApplicationRecord
     errors.add(:player_b, 'must be different from player A') if player_a_id == player_b_id
   end
 
+  private
+
+  def players_must_be_different
+    return unless player_a_id.present? && player_b_id.present?
+
+    errors.add(:player_b, 'must be different from player A') if player_a_id == player_b_id
+  end
+
   def scheduled_at_must_be_future
     return unless scheduled_at.present?
 
     errors.add(:scheduled_at, 'must be in the future') if scheduled_at <= Time.current
+  end
+
+  def auto_decide_requires_future_scheduled_at
+    return unless auto_decide && scheduled_at.present?
+
+    errors.add(:auto_decide, 'requires scheduled_at to be in the future') if scheduled_at <= Time.current
   end
 end

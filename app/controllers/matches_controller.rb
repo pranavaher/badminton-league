@@ -51,6 +51,10 @@ class MatchesController < ApplicationController
     end
 
     if @match.update(match_params)
+      # Cancel auto-decide job if it was previously enabled but is now disabled
+      if @match.auto_decide_previously_changed? && @match.auto_decide == false
+        @match.cancel_auto_decide_job
+      end
       redirect_to matches_path, notice: 'Match updated.'
     else
       @players = Player.order(:last_name, :first_name)
@@ -71,6 +75,7 @@ class MatchesController < ApplicationController
   end
 
   def destroy
+    @match.cancel_auto_decide_job if @match.auto_decide
     @match.destroy
     redirect_to matches_path, notice: 'Match deleted.'
   end
@@ -94,6 +99,6 @@ class MatchesController < ApplicationController
   end
 
   def match_params
-    params.require(:match).permit(:name, :player_a_id, :player_b_id, :scheduled_at, :venue_id)
+    params.require(:match).permit(:name, :player_a_id, :player_b_id, :scheduled_at, :venue_id, :auto_decide)
   end
 end

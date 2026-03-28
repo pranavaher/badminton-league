@@ -22,7 +22,10 @@ gem "devise"
 
 # Pagination
 gem "kaminari"
-# gem "bcrypt", "~> 3.1.7"
+
+# Background job processing
+gem "sidekiq"
+gem "redis"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

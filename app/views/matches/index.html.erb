@@ -41,6 +41,8 @@
             <td>
               <% if m.winner.present? %>
                 <span class="badge bg-success"><%= m.winner.name %></span>
+              <% elsif m.auto_decide %>
+                <span class="badge bg-info">Auto-decide pending</span>
               <% elsif m.scheduled_in_past? %>
                 <div class="btn-group" role="group">
                   <%= button_to 'Mark A as winner', decide_match_path(m, winner: 'a'), method: :post, class: 'btn btn-sm btn-outline-primary' %>
